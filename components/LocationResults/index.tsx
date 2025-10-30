@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { MapPin, Globe, Users, ArrowLeft, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LocationData } from '@/lib/api';
 import { cn } from '@/lib/utils';
+import { useLocationResults } from './hooks/useLocationResults';
 
 interface LocationResultsProps {
 	data: LocationData;
@@ -13,23 +13,14 @@ interface LocationResultsProps {
 }
 
 export function LocationResults({ data, onBack }: LocationResultsProps) {
-	const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-	const [likedImages, setLikedImages] = useState<Set<string>>(new Set());
-
-	const toggleLike = (imageId: string) => {
-		setLikedImages((prev) => {
-			const newSet = new Set(prev);
-			if (newSet.has(imageId)) {
-				newSet.delete(imageId);
-			} else {
-				newSet.add(imageId);
-			}
-			return newSet;
-		});
-	};
-
-	const mainImages = data.images.slice(0, 5);
-	const galleryImages = data.images.slice(5);
+	const {
+		selectedImageIndex,
+		setSelectedImageIndex,
+		likedImages,
+		toggleLike,
+		mainImages,
+		galleryImages,
+	} = useLocationResults(data);
 
 	return (
 		<div className='min-h-screen bg-background'>
