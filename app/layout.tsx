@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { QueryProvider } from '@/components/QueryProvider';
 
@@ -36,6 +37,7 @@ export default function RootLayout({
 						disableTransitionOnChange
 					>
 						{children}
+						<Analytics />
 					</ThemeProvider>
 				</QueryProvider>
 			</body>
